@@ -1,0 +1,24 @@
+name: Run Selenium Tests
+
+on: [push, pull_request]  # Run when code is pushed or a PR is opened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Run on Ubuntu
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3  # Fetch the code
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-chromedriver
+          pip install selenium
+
+      - name: Run Selenium Test
+        run: python test_selenium.py
